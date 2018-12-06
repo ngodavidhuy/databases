@@ -21,6 +21,10 @@ app.use(parser.json());
 // Set up our routes
 app.use('/classes', router);
 
+app.get('/', function (res, req) {
+  console.log('root route hit!!!');
+});
+
 // Serve the client files
 app.use(express.static(__dirname + '/../client'));
 
