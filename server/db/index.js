@@ -18,8 +18,9 @@ connection.connect((err) => {
     console.error('Error connecting to DB');
     throw err;
   }
-  console.log('D0llar Bill$ & WAVYDAVY CONNNECT ESTABLISHED YALL!');
+  console.log('D0llar Bill$ & WAVYDAVY CONNNECTION ESTABLISHED YALL!');
 });
+
 
 module.exports = connection;
 
