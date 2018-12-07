@@ -19,7 +19,7 @@ CREATE TABLE messages (
   id int AUTO_INCREMENT PRIMARY KEY,
   userID int,
   message text NOT NULL,
-  -- roomID int AUTO_INCREMENT,
+  roomname text,
   FOREIGN KEY (userID) REFERENCES users(id)
   -- FOREIGN KEY (roomID) REFERENCES rooms(id)
 );

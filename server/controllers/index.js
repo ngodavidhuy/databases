@@ -5,11 +5,9 @@ module.exports = {
     get: function (req, res) {
       models.messages.get((err, results) => {
         if (err) {
-          console.log('inside err');
           res.status(500).send(err);
         } else {
-          console.log('inside success');
-          res.status(200).json(results);
+          res.status(200).send(results);
         }
       });
     }, // a function which handles a get request for all messages

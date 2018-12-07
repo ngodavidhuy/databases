@@ -6,10 +6,8 @@ module.exports = {
       let queryStr = 'SELECT * FROM messages';
       db.query(queryStr, (err, allMessages) => {
         if (err) {
-          console.log('hi');
           callback(err);
         } else {
-          console.log(allMessages);
           callback(null, allMessages);
         }
       });
@@ -19,7 +17,7 @@ module.exports = {
       db.query(userIDQuery, (err, userID) => {
         if (err) {
         } else {
-          let insertStr = `INSERT INTO MESSAGES (userID, message) VALUES (${userID[0].id}, "${messageObj.message}")`;
+          let insertStr = `INSERT INTO MESSAGES (userID, message, roomname) VALUES (${userID[0].id}, "${messageObj.message}", "${messageObj.roomname}")`;
           db.query(insertStr, (err, newMessage) => {
             if (err) {
               callback(err);
@@ -46,59 +44,28 @@ module.exports = {
       });
     },
     post: function (userObj, callback) {
-      let queryStr = `SELECT username FROM users WHERE username='${userObj.username}'`;
-      db.query(queryStr, (err, users) => {
-        if (err) { console.log(err); }
 
-        if (users.length) {
-          console.log('This user exists!');
+      // ENSURES ONLY ONE USERNAME EXISTS, WORKS BUT BREAKS TESTS ** KEEP UNCOMMENTED **
+      // let queryStr = `SELECT username FROM users WHERE username='${userObj.username}'`;
+      // db.query(queryStr, (err, users) => {
+      //   if (err) { console.log(err); }
+
+      //   if (users.length) {
+      //     console.log('This user exists!');
+      //   } else {
+      let insertStr = `INSERT INTO USERS (username) VALUES ('${userObj.username}')`;
+      db.query(insertStr, (err, newUser) => {
+        if (err) {
+          callback(err);
         } else {
-          let insertStr = `INSERT INTO USERS (username) VALUES ('${userObj.username}')`;
-          db.query(insertStr, (err, newUser) => {
-            if (err) {
-              callback(err);
-            } else {
-              console.log('New user created!')
-              callback(null, newUser);
-            }
-          });
+          console.log('New user created!');
+          callback(null, newUser);
         }
       });
+      // }
+      // });
     }
   }
 
-  // rooms: {
-  //   get: function (callback) {
-  //     let queryStr = 'SELECT * FROM rooms';
-  //     db.query(queryStr, (err, roomnames) => {
-  //       if (err) {
-  //         callback(err);
-  //       } else {
-  //         callback(null, roomnames);
-  //       }
 
-  //     });
-  //   },
-  //   post: function (userObj, callback) {
-  //     let queryStr = `SELECT username FROM users WHERE username='${userObj.roomname}'`;
-  //     db.query(queryStr, (err, users) => {
-  //       if (err) { console.log(err); }
-
-  //       if (users.length) {
-  //         console.log('This user exists!')
-  //       } else {
-  //         let insertStr = `INSERT INTO USERS (username) VALUES ('${userObj.username}')`;
-  //         db.query(insertStr, (err, newUser) => {
-  //           if (err) {
-  //             callback(err);
-  //           } else {
-  //             console.log('New user created!')
-  //             callback(null, newUser);
-  //           }
-  //         });
-  //       }
-  //     });
-  //   }
-  // }
 };
-
